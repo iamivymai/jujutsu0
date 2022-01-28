@@ -7,7 +7,7 @@ const groups = [
   {
     name: 'A',
     countries: [
-      { name: 'Egypt', flag: 'https://i.imgur.com/m73BR2Z.gif' },
+      { name: 'Egypt', flag: 'https://i.imgur.com/OnE6Nlh.gif' },
       { name: 'Russia', flag: 'https://i.imgur.com/8oXSxrY.gif' },
       { name: 'Saudi', flag: 'https://i.imgur.com/p8sxiFR.gif' },
       { name: 'Urugary', flag: 'https://i.imgur.com/Zjamxtq.gif' }
