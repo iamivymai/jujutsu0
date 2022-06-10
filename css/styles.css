@@ -1,9 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Exo+2:200i);
 
-body{
-
-}
-
 #background {
   margin: 0;
   position: relative;
@@ -48,49 +44,29 @@ body{
   z-index: 999;
 }
 
-#navbar .navbar {
-  /* background-image: url("https://i.imgur.com/6Qj5nds.gif"); */
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 80px;
-}
-
-#navbar .navbar-brand {
-  background-image: url("https://gist.githack.com/jasonbbccdd/81fac1a23b8e88394cff8937b82e259f/raw/b4be3a8abc4afab2cc24f2dd2e0fb00f956def81/nav-brand-world-cup-2018.svg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  /* min-height: 100px;
-  width: 350px; */
-  min-height: 60px;
-  width: 240px ;
-  /* border-radius: 25px; */
-  margin: 0.2rem 0.2rem 0.2rem 0.2rem;
-}
-
-#navbar a.dropdown-item {
-  font-size: 1rem;
+#navbar .navbar-brand img {
+  height: 100%;
 }
 
 /* MAIN START */
 #main {
-  margin-top: 80px;
+  margin-top: 106px;
   opacity: 0.9;
-
 }
 
 #main .list-group-item-action:hover {
   background-color: rgba(0, 0, 0, 0.) !important;
 }
 
-#main .group-country {
+#main .group-team {
   cursor: pointer;
 }
 
-#main .group-country.disabled {
+#main .group-team.disabled {
   filter: blur(5px);
 }
 
-#main .group-country *,
+#main .group-team *,
 #main .group-standing * {
   pointer-events: none;
 }
@@ -105,60 +81,7 @@ body{
   border-color: rgba(0, 0, 0, 0.4) !important;
 }
 
-#main .group-country.selected .round-flag {
+#main .group-team.selected .round-flag {
   border-width: 3px !important;
   border-color: rgba(0, 0, 0, 0.4) !important;
 }
-
-/* #main .group-standings {
-  margin-top: 120px;
-}
-
-#main .group-ranking {
-  background-color: transparent;
-  border: 0.2rem solid #fff;
-  border-radius: 2rem;
-  text-transform: uppercase;
-  animation: flicker 1.5s infinite alternate;
-}
-
-#main .group-ranking.card-body {
-  padding: 3rem;
-}
-
-#main .group-ranking .group-title {
-  font-size: 3rem;
-  color: rgba(0, 0, 0, 0.5);
-}
-
-#main .group-team-flag {
-  background-color: #04AA6D;
-  border: none;
-  color: white;
-  padding: 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-  border-radius: 50%;
-  background-image: url("https://i.imgur.com/m73BR2Z.gif");
-} */
-
-
-
-
-.testing {
-  position: relative;
-  margin: auto;
-  padding-bottom: 10px;
-  text-align: center;
-  text-transform: uppercase;
-  text-align: center;
-  font-size: 5rem;
-  color: rgba(0, 0, 0, 0.5);
-}
-
-
-

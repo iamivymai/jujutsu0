@@ -1,216 +1,419 @@
+import { generate32Cards, generate32CardHTML, generate32CardStandingHTML } from './32.js'
+import { generateBrackets } from './brackets.js'
+
 // GLOBAL | Elements
-const GROUP_A = "A"
-const GROUP_B = "B"
-const GROUP_C = "C"
-const GROUP_D = 'D'
-const GROUP_E = 'E'
-const GROUP_F = 'F'
-const GROUP_G = 'G'
-const GROUP_H = 'H'
-
-const A = 0
-const B = 4*1
-const C = 4*2
-const D = 4*3
-const E = 4*4
-const F = 4*5
-const G = 4*6
-const H = 4*7
-
-const LATEST_WORLD_CUP = 2022
-
-const AFC       = "#fafe00"
-const CAF       = "#454545"
-const CONMEBOL  = "#ff0044"
-const CONCACAF  = "#0f4bff"
-const OFC       = "00ddff"
-const UEFA      = "#00ff00"
-
-const HOST          = "H"
-const GROUP_WINNER  = "1"
-const PLAYOFF       = "P"
-const INTER_CONTINENTAL_PLAYOFF = "ICP"
-
-
 const $groupings = $('#groupings')
+const $brackets = $('#brackets')
 const $main = $('#main')
 
+// GLOBAL | Mapping
+const GEN_BRACKETS_ORDER = [16, 8, 4, 'third', 'champion']
+const TOURNAMENT_MAPPING = {
+  32: {
+    A1: [0, 0],
+    A2: [4, 1],
+    B1: [4, 0],
+    B2: [0, 1],
+    C1: [1, 0],
+    C2: [5, 1],
+    D1: [5, 0],
+    D2: [1, 1],
+    E1: [2, 0],
+    E2: [6, 1],
+    F1: [6, 0],
+    F2: [2, 1],
+    G1: [3, 0],
+    G2: [7, 1],
+    H1: [7, 0],
+    H2: [3, 1]
+  },
+  16: {
+    toStage: 8,
+    mapping: {
+      0: [0, 0],
+      1: [0, 1],
+      2: [1, 0],
+      3: [1, 1],
+      4: [2, 0],
+      5: [2, 1],
+      6: [3, 0],
+      7: [3, 1]
+    }
+  },
+  8: {
+    toStage: 4,
+    mapping: {
+      0: [0, 0],
+      1: [0, 1],
+      2: [1, 0],
+      3: [1, 1],
+    }
+  },
+  4: {
+    toStage: 'champion/third',
+    mapping: {
+      0: [0, 0],
+      1: [0, 1],
+    }
+  }
+}
+
 // GLOBAL | Init Data
-let groups = [
-  {
-    name: GROUP_A,
-    countries: [
-      { name: 'Egypt', flag: 'https://i.imgur.com/OnE6Nlh.gif' },
-      { name: 'Russia', flag: 'https://i.imgur.com/8oXSxrY.gif' },
-      { name: 'Saudi', flag: 'https://i.imgur.com/p8sxiFR.gif' },
-      { name: 'Urugary', flag: 'https://i.imgur.com/Zjamxtq.gif' }
-    ],
+const groups = {
+  A: {
+    Egypt: {
+      id: 'Egypt',
+      name: 'Egypt',
+      flag: 'https://i.imgur.com/OnE6Nlh.gif'
+    },
+    Russia: {
+      id: 'Russia',
+      name: 'Russia',
+      flag: 'https://i.imgur.com/8oXSxrY.gif'
+    },
+    Saudi: {
+      id: 'Saudi',
+      name: 'Saudi',
+      flag: 'https://i.imgur.com/p8sxiFR.gif'
+    },
+    Urugary: {
+      id: 'Urugary',
+      name: 'Urugary',
+      flag: 'https://i.imgur.com/Zjamxtq.gif'
+    },
   },
-  {
-    name: 'B',
-    countries: [
-      { name: 'Iran', flag: 'https://i.imgur.com/Tt2WbQc.gif' },
-      { name: 'Morocco', flag: 'https://i.imgur.com/eKiIZ8I.gif' },
-      { name: 'Portugal', flag: 'https://i.imgur.com/hzPGbTJ.gif' },
-      { name: 'Spain', flag: 'https://i.imgur.com/0LaBDTf.gif' }
-    ]
+  B: {
+    Iran: {
+      id: 'Iran',
+      name: 'Iran',
+      flag: 'https://i.imgur.com/Tt2WbQc.gif'
+    },
+    Morocco: {
+      id: 'Morocco',
+      name: 'Morocco',
+      flag: 'https://i.imgur.com/eKiIZ8I.gif'
+    },
+    Portugal: {
+      id: 'Portugal',
+      name: 'Portugal',
+      flag: 'https://i.imgur.com/hzPGbTJ.gif'
+    },
+    Spain: {
+      id: 'Spain',
+      name: 'Spain',
+      flag: 'https://i.imgur.com/0LaBDTf.gif'
+    },
   },
-  {
-    name: 'C',
-    countries: [
-      { name: 'Australia', flag: 'https://i.imgur.com/Ty3X9FM.gif' },
-      { name: 'Denmark', flag: 'https://i.imgur.com/hj7RGT2.gif' },
-      { name: 'Peru', flag: 'https://i.imgur.com/ALDOycv.gif' },
-      { name: 'France', flag: 'https://i.imgur.com/qVjpSum.gif' },
-    ]
+  C: {
+    Australia: {
+      id: 'Australia',
+      name: 'Australia',
+      flag: 'https://i.imgur.com/Ty3X9FM.gif'
+    },
+    Denmark: {
+      id: 'Denmark',
+      name: 'Denmark',
+      flag: 'https://i.imgur.com/hj7RGT2.gif'
+    },
+    Peru: {
+      id: 'Peru',
+      name: 'Peru',
+      flag: 'https://i.imgur.com/ALDOycv.gif'
+    },
+    France: {
+      id: 'France',
+      name: 'France',
+      flag: 'https://i.imgur.com/qVjpSum.gif'
+    },
   },
-  {
-    name: 'D',
-    countries: [
-      { name: 'Argentina', flag: 'https://i.imgur.com/wOqyuW9.gif' },
-      { name: 'Croatia', flag: 'https://i.imgur.com/PH9jUN0.gif' },
-      { name: 'Iceland', flag: 'https://i.imgur.com/khtRIp4.gif' },
-      { name: 'Nigeria', flag: 'https://i.imgur.com/Umqr7bz.gif' }
-    ]
+  D: {
+    Argentina: {
+      id: 'Argentina',
+      name: 'Argentina',
+      flag: 'https://i.imgur.com/wOqyuW9.gif'
+    },
+    Croatia: {
+      id: 'Croatia',
+      name: 'Croatia',
+      flag: 'https://i.imgur.com/PH9jUN0.gif'
+    },
+    Iceland: {
+      id: 'Iceland',
+      name: 'Iceland',
+      flag: 'https://i.imgur.com/khtRIp4.gif'
+    },
+    Nigeria: {
+      id: 'Nigeria',
+      name: 'Nigeria',
+      flag: 'https://i.imgur.com/Umqr7bz.gif'
+    },
   },
-  {
-    name: 'E',
-    countries: [
-      { name: 'Brazil', flag: 'https://i.imgur.com/lnOsyel.gif' },
-      { name: 'Costa Rica', flag: 'https://i.imgur.com/h466S8Q.gif' },
-      { name: 'Serbia', flag: 'https://i.imgur.com/OsOobI6.gif' },
-      { name: 'Switzerland', flag: 'https://i.imgur.com/oAHsrp0.gif' }
-    ]
+  E: {
+    Brazil: {
+      id: 'Brazil',
+      name: 'Brazil',
+      flag: 'https://i.imgur.com/lnOsyel.gif'
+    },
+    Costa: {
+      id: 'Costa',
+      name: 'Costa',
+      flag: 'https://i.imgur.com/h466S8Q.gif'
+    },
+    Serbia: {
+      id: 'Serbia',
+      name: 'Serbia',
+      flag: 'https://i.imgur.com/OsOobI6.gif'
+    },
+    Switzerland: {
+      id: 'Switzerland',
+      name: 'Switzerland',
+      flag: 'https://i.imgur.com/oAHsrp0.gif'
+    },
   },
-  {
-    name: 'F',
-    countries: [
-      { name: 'Germany', flag: 'https://i.imgur.com/tYdPs3u.gif' },
-      { name: 'Mexico', flag: 'https://i.imgur.com/sA7fLA3.gif' },
-      { name: 'South Korea', flag: 'https://i.imgur.com/6B6RBlM.gif' },
-      { name: 'Sweden', flag: 'https://i.imgur.com/FbDhOhA.gif' }
-    ]
+  F: {
+    Germany: {
+      id: 'Germany',
+      name: 'Germany',
+      flag: 'https://i.imgur.com/tYdPs3u.gif'
+    },
+    Mexico: {
+      id: 'Mexico',
+      name: 'Mexico',
+      flag: 'https://i.imgur.com/sA7fLA3.gif'
+    },
+    Korea: {
+      id: 'Korea',
+      name: 'Korea',
+      flag: 'https://i.imgur.com/6B6RBlM.gif'
+    },
+    Sweden: {
+      id: 'Sweden',
+      name: 'Sweden',
+      flag: 'https://i.imgur.com/FbDhOhA.gif'
+    },
   },
-  {
-    name: 'G',
-    countries: [
-      { name: 'Belgium', flag: 'https://i.imgur.com/z5uctb6.gif' },
-      { name: 'England', flag: 'https://i.imgur.com/veDCYW1.gif' },
-      { name: 'Panama', flag: 'https://i.imgur.com/ABMAejX.gif' },
-      { name: 'Tunisia', flag: 'https://i.imgur.com/Q9DOGji.gif' }
-    ]
+  G: {
+    Belgium: {
+      id: 'Belgium',
+      name: 'Belgium',
+      flag: 'https://i.imgur.com/z5uctb6.gif'
+    },
+    England: {
+      id: 'England',
+      name: 'England',
+      flag: 'https://i.imgur.com/veDCYW1.gif'
+    },
+    Panama: {
+      id: 'Panama',
+      name: 'Panama',
+      flag: 'https://i.imgur.com/ABMAejX.gif'
+    },
+    Tunisia: {
+      id: 'Tunisia',
+      name: 'Tunisia',
+      flag: 'https://i.imgur.com/Q9DOGji.gif'
+    },
   },
-  {
-    name: 'H',
-    countries: [
-      { name: 'Colombia', flag: 'https://i.imgur.com/91LLAO1.gif' },
-      { name: 'Japan', flag: 'https://i.imgur.com/wolmADo.gif' },
-      { name: 'Poland', flag: 'https://i.imgur.com/I79vh9o.gif' },
-      { name: 'Senegal', flag: 'https://i.imgur.com/amBHaD8.gif' },
-    ]
+  H: {
+    Colombia: {
+      id: 'Colombia',
+      name: 'Colombia',
+      flag: 'https://i.imgur.com/91LLAO1.gif'
+    },
+    Japan: {
+      id: 'Japan',
+      name: 'Japan',
+      flag: 'https://i.imgur.com/wolmADo.gif'
+    },
+    Poland: {
+      id: 'Poland',
+      name: 'Poland',
+      flag: 'https://i.imgur.com/I79vh9o.gif'
+    },
+    Senegal: {
+      id: 'Senegal',
+      name: 'Senegal',
+      flag: 'https://i.imgur.com/amBHaD8.gif'
+    },
   },
-]
-
-// GROUP | Generate New Group
-
-const generateGroup = (groupIndex, group, countries) => {
-  return `
-    <div id="group${group}" class="group col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-12 mb-3">
-      <div class="card bg-transparent border-white">
-        <div class="card-body position-relative">
-          <h5 class="card-title text-center mb-3">Group ${group}</h5>
-          <button class="reset-btn btn btn-danger position-absolute end-0 top-0 mt-2 me-3" data-group-index="${groupIndex}">Reset</button>
-
-          <ul class="list-group border-top-0 mb-3">
-            <button type="button" class="group-standing list-group-item list-group-item-action bg-transparent text-white border-white d-flex flex-row align-items-center">
-              <span class="me-2">1st</span>
-            </button>
-            <button type="button" class="group-standing list-group-item list-group-item-action bg-transparent text-white border-white d-flex flex-row align-items-center">
-              <span class="me-2">2nd</span>
-            </button>
-            <button type="button" class="group-standing list-group-item list-group-item-action bg-transparent text-white border-white d-flex flex-row align-items-center">
-              <span class="me-2">3rd</span>
-            </button>
-            <button type="button" class="group-standing list-group-item list-group-item-action bg-transparent text-white border-white d-flex flex-row align-items-center">
-              <span class="me-2">4th</span>
-            </button>
-          </ul>
-
-          <div class="d-flex flex-row justify-content-between align-items-center">
-            <div class="group-country col text-center" data-group-index="${groupIndex}" data-country-index="0">
-              <img class="round-flag rounded-circle border border-white mx-auto" src="${countries[0].flag}" alt="">
-              <div>${countries[0].name}</div>
-            </div>
-            <div class="group-country col text-center" data-group-index="${groupIndex}" data-country-index="1">
-              <img class="round-flag rounded-circle border border-white mx-auto" src="${countries[1].flag}" alt="">
-              <div>${countries[1].name}</div>
-            </div>
-            <div class="group-country col text-center" data-group-index="${groupIndex}" data-country-index="2">
-              <img class="round-flag rounded-circle border border-white mx-auto" src="${countries[2].flag}" alt="">
-              <div>${countries[2].name}</div>
-            </div>
-            <div class="group-country col text-center" data-group-index="${groupIndex}" data-country-index="3">
-              <img class="round-flag rounded-circle border border-white mx-auto" src="${countries[3].flag}" alt="">
-              <div>${countries[3].name}</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  `
 }
 
-const generateGroupStanding = (country) => {
-  return `
-    <img class="round-flag rounded-circle border border-white me-2" src="${country.flag}" alt="">
-    <span class="flex-grow-1">${country.name}</span>
-  `
+// GLOBAL | Main Data
+let tournament = {
+  32: {},
+  16: {
+    title: 'Round of 16',
+    matches: Array(8).fill(null).map(() => Array(2).fill(null))
+  },
+  8: {
+    title: 'Quarter Finals',
+    matches: Array(4).fill(null).map(() => Array(2).fill(null))
+  },
+  4: {
+    title: 'Semi Finals',
+    matches: Array(2).fill(null).map(() => Array(2).fill(null))
+  },
+  third: {
+    title: 'Third Place',
+    matches: Array(1).fill(null).map(() => Array(2).fill(null))
+  },
+  champion: {
+    title: 'Final',
+    matches: Array(1).fill(null).map(() => Array(2).fill(null))
+  },
 }
 
-const init = function() {
-  groups.forEach((group, i) => {
-    $groupings.append(generateGroup(i, group.name, group.countries))
-  })
+let thirdWinner = null
+let championWinner = null
 
-  $main.on('click', '.group-country', (e) => {
-    const $elem = $(e.target)
-    const $parent = $elem.parent()
+tournament[16].matches[0][0] = groups.A.Egypt
+tournament[16].matches[0][1] = groups.B.Iran
+tournament[16].matches[1][0] = groups.C.Denmark
+tournament[16].matches[1][1] = groups.D.Argentina
+tournament[16].matches[2][0] = groups.E.Brazil
+tournament[16].matches[2][1] = groups.F.Germany
+tournament[16].matches[3][0] = groups.G.Belgium
+tournament[16].matches[3][1] = groups.H.Colombia
+tournament[16].matches[4][0] = groups.A.Russia
+tournament[16].matches[4][1] = groups.B.Spain
+tournament[16].matches[5][0] = groups.C.France
+tournament[16].matches[5][1] = groups.D.Croatia
+tournament[16].matches[6][0] = groups.E.Switzerland
+tournament[16].matches[6][1] = groups.F.Mexico
+tournament[16].matches[7][0] = groups.G.England
+tournament[16].matches[7][1] = groups.H.Japan
+
+const bind32 = () => {
+  $main.on('click', '.group-team', (e) => {
+    const $elem = $(e.currentTarget)
 
     if (!$elem.hasClass('disabled')) {
-      $parent.find('.selected').removeClass('selected')
+      $elem.parent().find('.selected').removeClass('selected')
       $elem.addClass('selected')
     }
   })
 
   $main.on('click', '.group-standing', (e) => {
-    const $elem = $(e.target)
+    const $elem = $(e.currentTarget)
     const $group = $elem.parents('.group')
     const $selected = $group.find('.selected')
 
-    if ($selected.length > 0) {
-      const groupIndex = $selected.data('group-index')
-      const countryIndex = $selected.data('country-index')
-      const country = groups[groupIndex].countries[countryIndex]
-      $elem.append(generateGroupStanding(country))
+    const groupID = $group.data('group-id')
+    const teamID = $selected.data('team-id')
+    const groupStandingIndex = $elem.data('group-standing-id')
 
+    const isStandingTaken = _.get(tournament, `32.${groupID}[${groupStandingIndex}]`, null)
+
+    if (!isStandingTaken && $selected.length > 0) {
+      const teamData = groups[groupID][teamID]
+
+      _.set(tournament, `32.${groupID}[${groupStandingIndex}]`, teamData)
+      $elem.html(generate32CardStandingHTML(teamData))
       $selected.removeClass('selected').addClass('disabled')
+
+      if (groupStandingIndex === 0 || groupStandingIndex === 1) {
+        const tournamentMatchPosition = TOURNAMENT_MAPPING[32][`${groupID}${groupStandingIndex + 1}`]
+        const matchesIndex = tournamentMatchPosition[0]
+        const teamIndex = tournamentMatchPosition[1]
+
+        _.set(tournament, `16.matches[${matchesIndex}][${teamIndex}]`, teamData)
+        generateBrackets(GEN_BRACKETS_ORDER, tournament, $brackets)
+      }
     }
   })
 
   $main.on('click', '.reset-btn', (e) => {
-    const $elem = $(e.target)
+    const $elem = $(e.currentTarget)
     const $group = $elem.parents('.group')
 
-    const groupIndex = $elem.data('group-index')
+    const groupID = $group.data('group-id')
 
-    $group.replaceWith(generateGroup(groupIndex, groups[groupIndex].name, groups[groupIndex].countries))
+    const groupFTeam = _.get(tournament, `32.${groupID}[0]`, null)
+    const groupSTeam = _.get(tournament, `32.${groupID}[1]`, null)
+
+    // reset brackets
+    GEN_BRACKETS_ORDER.forEach((bracketID) => {
+      tournament[bracketID].matches = tournament[bracketID].matches.map((match) => {
+        return match.map((team) => {
+          const condition1 = groupFTeam && team?.id === groupFTeam.id
+          const condition2 = groupSTeam && team?.id === groupSTeam.id
+
+          if (condition1 || condition2) {
+            return null
+          }
+
+          return team
+        })
+      })
+    })
+    generateBrackets(GEN_BRACKETS_ORDER, tournament, $brackets)
+
+    // reset 32
+    _.set(tournament, `32.${groupID}`, [])
+    $group.replaceWith(generate32CardHTML(groupID, groups[groupID]))
   })
 }
 
+const bindBrackets = () => {
+  $brackets.on('click', '.team', (e) => {
+    const $elem = $(e.currentTarget)
+    const $match = $elem.parents('.match')
+    const $bracket = $elem.parents('.bracket')
+
+    const teamIndex = $elem.data('team-index')
+    const matchIndex = $match.data('match-index')
+    const bracketID = $bracket.data('bracket-id')
+
+    const winningTeam = _.get(tournament, `${bracketID}.matches[${matchIndex}][${teamIndex}]`)
+    const losingTeam = _.get(tournament, `${bracketID}.matches[${matchIndex}][${teamIndex === 0 ? 1 : 0}]`)
+
+    if (winningTeam && losingTeam) {
+      if (bracketID !== 'champion' && bracketID !== 'third') {
+        const stageMapping = _.get(TOURNAMENT_MAPPING, `${bracketID}`)
+        const toStage = stageMapping.toStage
+        const [toMatchIndex, toTeamIndex] = _.get(stageMapping, `mapping[${matchIndex}]`)
+
+        const bracketOrderIndex = GEN_BRACKETS_ORDER.indexOf(bracketID)
+        GEN_BRACKETS_ORDER.slice(bracketOrderIndex + 1).forEach((otherBracketID) => {
+          tournament[otherBracketID].matches = tournament[otherBracketID].matches.map((match) => {
+            return match.map((team) => {
+              if (team?.id && team?.id === losingTeam?.id) {
+                return winningTeam // ! replace subsequent stage with winning team
+                // return null // ! reset subsequent stages
+              }
+
+              return team
+            })
+          })
+        })
+
+        if (toStage === 'champion/third') {
+          _.set(tournament, `third.matches[${toMatchIndex}][${toTeamIndex}]`, losingTeam)
+          _.set(tournament, `champion.matches[${toMatchIndex}][${toTeamIndex}]`, winningTeam)
+        } else {
+          _.set(tournament, `${toStage}.matches[${toMatchIndex}][${toTeamIndex}]`, winningTeam)
+        }
+
+        generateBrackets(GEN_BRACKETS_ORDER, tournament, $brackets)
+      } else {
+        if (bracketID === 'champion') {
+          championWinner = winningTeam
+          $(`[data-bracket-id=${bracketID}] [data-team-id=${winningTeam.id}]`).addClass('text-success')
+        } else {
+          thirdWinner = winningTeam
+          $(`[data-bracket-id=${bracketID}] [data-team-id=${winningTeam.id}]`).addClass('text-success')
+        }
+      }
+    }
+  })
+}
+
+const init = function() {
+  generate32Cards(groups, $groupings)
+  bind32()
+
+  generateBrackets(GEN_BRACKETS_ORDER, tournament, $brackets)
+  bindBrackets()
+}
+
 init()
-
-
-// <button id="scroll">scroll</button>
-// $('#scroll').on('click', () => {
-//   window.scrollTo(0, $('#main').offset().top - 120)
-// })
