@@ -8,7 +8,7 @@ const $main = $('#main')
 
 // GLOBAL | Mapping
 const GEN_BRACKETS_ORDER = [16, 8, 4, 'third', 'champion']
-const TOURNAMENT_MAPPING = {
+const STAGES_MAPPING = {
   32: {
     A1: [0, 0],
     A2: [4, 1],
@@ -239,7 +239,7 @@ const groups = {
 }
 
 // GLOBAL | Main Data
-let tournament = {
+let stages = {
   32: {},
   16: {
     title: 'Round of 16',
@@ -266,22 +266,22 @@ let tournament = {
 let thirdWinner = null
 let championWinner = null
 
-tournament[16].matches[0][0] = groups.A.Egypt
-tournament[16].matches[0][1] = groups.B.Iran
-tournament[16].matches[1][0] = groups.C.Denmark
-tournament[16].matches[1][1] = groups.D.Argentina
-tournament[16].matches[2][0] = groups.E.Brazil
-tournament[16].matches[2][1] = groups.F.Germany
-tournament[16].matches[3][0] = groups.G.Belgium
-tournament[16].matches[3][1] = groups.H.Colombia
-tournament[16].matches[4][0] = groups.A.Russia
-tournament[16].matches[4][1] = groups.B.Spain
-tournament[16].matches[5][0] = groups.C.France
-tournament[16].matches[5][1] = groups.D.Croatia
-tournament[16].matches[6][0] = groups.E.Switzerland
-tournament[16].matches[6][1] = groups.F.Mexico
-tournament[16].matches[7][0] = groups.G.England
-tournament[16].matches[7][1] = groups.H.Japan
+stages[16].matches[0][0] = groups.A.Egypt
+stages[16].matches[0][1] = groups.B.Iran
+stages[16].matches[1][0] = groups.C.Denmark
+stages[16].matches[1][1] = groups.D.Argentina
+stages[16].matches[2][0] = groups.E.Brazil
+stages[16].matches[2][1] = groups.F.Germany
+stages[16].matches[3][0] = groups.G.Belgium
+stages[16].matches[3][1] = groups.H.Colombia
+stages[16].matches[4][0] = groups.A.Russia
+stages[16].matches[4][1] = groups.B.Spain
+stages[16].matches[5][0] = groups.C.France
+stages[16].matches[5][1] = groups.D.Croatia
+stages[16].matches[6][0] = groups.E.Switzerland
+stages[16].matches[6][1] = groups.F.Mexico
+stages[16].matches[7][0] = groups.G.England
+stages[16].matches[7][1] = groups.H.Japan
 
 const bind32 = () => {
   $main.on('click', '.group-team', (e) => {
@@ -302,22 +302,22 @@ const bind32 = () => {
     const teamID = $selected.data('team-id')
     const groupStandingIndex = $elem.data('group-standing-id')
 
-    const isStandingTaken = _.get(tournament, `32.${groupID}[${groupStandingIndex}]`, null)
+    const isStandingTaken = _.get(stages, `32.${groupID}[${groupStandingIndex}]`, null)
 
     if (!isStandingTaken && $selected.length > 0) {
       const teamData = groups[groupID][teamID]
 
-      _.set(tournament, `32.${groupID}[${groupStandingIndex}]`, teamData)
+      _.set(stages, `32.${groupID}[${groupStandingIndex}]`, teamData)
       $elem.html(generate32CardStandingHTML(teamData))
       $selected.removeClass('selected').addClass('disabled')
 
       if (groupStandingIndex === 0 || groupStandingIndex === 1) {
-        const tournamentMatchPosition = TOURNAMENT_MAPPING[32][`${groupID}${groupStandingIndex + 1}`]
-        const matchesIndex = tournamentMatchPosition[0]
-        const teamIndex = tournamentMatchPosition[1]
+        const stagesMatchPosition = STAGES_MAPPING[32][`${groupID}${groupStandingIndex + 1}`]
+        const matchesIndex = stagesMatchPosition[0]
+        const teamIndex = stagesMatchPosition[1]
 
-        _.set(tournament, `16.matches[${matchesIndex}][${teamIndex}]`, teamData)
-        generateBrackets(GEN_BRACKETS_ORDER, tournament, $brackets)
+        _.set(stages, `16.matches[${matchesIndex}][${teamIndex}]`, teamData)
+        generateBrackets(GEN_BRACKETS_ORDER, stages, $brackets)
       }
     }
   })
@@ -328,12 +328,12 @@ const bind32 = () => {
 
     const groupID = $group.data('group-id')
 
-    const groupFTeam = _.get(tournament, `32.${groupID}[0]`, null)
-    const groupSTeam = _.get(tournament, `32.${groupID}[1]`, null)
+    const groupFTeam = _.get(stages, `32.${groupID}[0]`, null)
+    const groupSTeam = _.get(stages, `32.${groupID}[1]`, null)
 
     // reset brackets
     GEN_BRACKETS_ORDER.forEach((bracketID) => {
-      tournament[bracketID].matches = tournament[bracketID].matches.map((match) => {
+      stages[bracketID].matches = stages[bracketID].matches.map((match) => {
         return match.map((team) => {
           const condition1 = groupFTeam && team?.id === groupFTeam.id
           const condition2 = groupSTeam && team?.id === groupSTeam.id
@@ -346,10 +346,10 @@ const bind32 = () => {
         })
       })
     })
-    generateBrackets(GEN_BRACKETS_ORDER, tournament, $brackets)
+    generateBrackets(GEN_BRACKETS_ORDER, stages, $brackets)
 
     // reset 32
-    _.set(tournament, `32.${groupID}`, [])
+    _.set(stages, `32.${groupID}`, [])
     $group.replaceWith(generate32CardHTML(groupID, groups[groupID]))
   })
 }
@@ -364,18 +364,18 @@ const bindBrackets = () => {
     const matchIndex = $match.data('match-index')
     const bracketID = $bracket.data('bracket-id')
 
-    const winningTeam = _.get(tournament, `${bracketID}.matches[${matchIndex}][${teamIndex}]`)
-    const losingTeam = _.get(tournament, `${bracketID}.matches[${matchIndex}][${teamIndex === 0 ? 1 : 0}]`)
+    const winningTeam = _.get(stages, `${bracketID}.matches[${matchIndex}][${teamIndex}]`)
+    const losingTeam = _.get(stages, `${bracketID}.matches[${matchIndex}][${teamIndex === 0 ? 1 : 0}]`)
 
     if (winningTeam && losingTeam) {
       if (bracketID !== 'champion' && bracketID !== 'third') {
-        const stageMapping = _.get(TOURNAMENT_MAPPING, `${bracketID}`)
+        const stageMapping = _.get(STAGES_MAPPING, `${bracketID}`)
         const toStage = stageMapping.toStage
         const [toMatchIndex, toTeamIndex] = _.get(stageMapping, `mapping[${matchIndex}]`)
 
         const bracketOrderIndex = GEN_BRACKETS_ORDER.indexOf(bracketID)
         GEN_BRACKETS_ORDER.slice(bracketOrderIndex + 1).forEach((otherBracketID) => {
-          tournament[otherBracketID].matches = tournament[otherBracketID].matches.map((match) => {
+          stages[otherBracketID].matches = stages[otherBracketID].matches.map((match) => {
             return match.map((team) => {
               if (team?.id && team?.id === losingTeam?.id) {
                 return winningTeam // ! replace subsequent stage with winning team
@@ -388,20 +388,20 @@ const bindBrackets = () => {
         })
 
         if (toStage === 'champion/third') {
-          _.set(tournament, `third.matches[${toMatchIndex}][${toTeamIndex}]`, losingTeam)
-          _.set(tournament, `champion.matches[${toMatchIndex}][${toTeamIndex}]`, winningTeam)
+          _.set(stages, `third.matches[${toMatchIndex}][${toTeamIndex}]`, losingTeam)
+          _.set(stages, `champion.matches[${toMatchIndex}][${toTeamIndex}]`, winningTeam)
         } else {
-          _.set(tournament, `${toStage}.matches[${toMatchIndex}][${toTeamIndex}]`, winningTeam)
+          _.set(stages, `${toStage}.matches[${toMatchIndex}][${toTeamIndex}]`, winningTeam)
         }
 
-        generateBrackets(GEN_BRACKETS_ORDER, tournament, $brackets)
+        generateBrackets(GEN_BRACKETS_ORDER, stages, $brackets)
       } else {
         if (bracketID === 'champion') {
           championWinner = winningTeam
           $(`[data-bracket-id=${bracketID}] [data-team-id=${winningTeam.id}]`).addClass('text-success')
         } else {
           thirdWinner = winningTeam
-          $(`[data-bracket-id=${bracketID}] [data-team-id=${winningTeam.id}]`).addClass('text-success')
+          $(`[data-bracket-id=${bracketID}][data-team-id=${winningTeam.id}]`).addClass('text-success')
         }
       }
     }
@@ -412,7 +412,7 @@ const init = function() {
   generate32Cards(groups, $groupings)
   bind32()
 
-  generateBrackets(GEN_BRACKETS_ORDER, tournament, $brackets)
+  generateBrackets(GEN_BRACKETS_ORDER, stages, $brackets)
   bindBrackets()
 }
 

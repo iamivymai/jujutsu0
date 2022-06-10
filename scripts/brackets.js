@@ -47,16 +47,16 @@ export const generateBracketHTML = (bracketID, bracketData) => {
   `
 }
 
-export const generateBracketsHTML = (genOrder, tournament) => {
+export const generateBracketsHTML = (genOrder, stages) => {
   let template = ''
 
   genOrder.forEach((bracketID) => {
-    template += generateBracketHTML(bracketID, tournament[bracketID])
+    template += generateBracketHTML(bracketID, stages[bracketID])
   })
 
   return template
 }
 
-export const generateBrackets = (genOrder, tournament, $brackets) => {
-  $brackets.html(generateBracketsHTML(genOrder, tournament))
+export const generateBrackets = (genOrder, stages, $brackets) => {
+  $brackets.html(generateBracketsHTML(genOrder, stages))
 }

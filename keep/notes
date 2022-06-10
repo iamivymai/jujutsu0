@@ -1,21 +1,21 @@
 else if (toStage === 4) {
-  _.set(tournament, `${toStage}.matches[${toMatchIndex}][${toTeamIndex}]`, winningTeam)
+  _.set(stages, `${toStage}.matches[${toMatchIndex}][${toTeamIndex}]`, winningTeam)
 
-  const finalStageMapping = _.get(TOURNAMENT_MAPPING, '4')
+  const finalStageMapping = _.get(STAGES_MAPPING, '4')
   const [finalToMatchIndex, finalToTeamIndex] = _.get(finalStageMapping, `mapping[${toMatchIndex}]`)
 
-  const otherFinalStageTeam = _.get(tournament, `${toStage}.matches[${toMatchIndex}][${toTeamIndex === 0 ? 1 : 0}]`)
+  const otherFinalStageTeam = _.get(stages, `${toStage}.matches[${toMatchIndex}][${toTeamIndex === 0 ? 1 : 0}]`)
 
-  const existingChampionTeam = _.get(tournament, `champion.matches[${finalToMatchIndex}][${finalToTeamIndex}]`)
-  const existingThirdTeam = _.get(tournament, `third.matches[${finalToMatchIndex}][${finalToTeamIndex}]`)
+  const existingChampionTeam = _.get(stages, `champion.matches[${finalToMatchIndex}][${finalToTeamIndex}]`)
+  const existingThirdTeam = _.get(stages, `third.matches[${finalToMatchIndex}][${finalToTeamIndex}]`)
 
   console.log(existingChampionTeam, existingThirdTeam, otherFinalStageTeam, winningTeam)
 
   if (existingChampionTeam && existingChampionTeam?.id === otherFinalStageTeam?.id) {
-    _.set(tournament, `third.matches[${finalToMatchIndex}][${finalToTeamIndex}]`, otherFinalStageTeam)
-    _.set(tournament, `champion.matches[${finalToMatchIndex}][${finalToTeamIndex}]`, winningTeam)
+    _.set(stages, `third.matches[${finalToMatchIndex}][${finalToTeamIndex}]`, otherFinalStageTeam)
+    _.set(stages, `champion.matches[${finalToMatchIndex}][${finalToTeamIndex}]`, winningTeam)
   } else {
-    _.set(tournament, `third.matches[${finalToMatchIndex}][${finalToTeamIndex}]`)
-    _.set(tournament, `champion.matches[${finalToMatchIndex}][${finalToTeamIndex}]`)
+    _.set(stages, `third.matches[${finalToMatchIndex}][${finalToTeamIndex}]`)
+    _.set(stages, `champion.matches[${finalToMatchIndex}][${finalToTeamIndex}]`)
   }
 } else
