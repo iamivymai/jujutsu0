@@ -1,18 +1,52 @@
 // GLOBAL | Elements
+const GROUP_A = "A"
+const GROUP_B = "B"
+const GROUP_C = "C"
+const GROUP_D = 'D'
+const GROUP_E = 'E'
+const GROUP_F = 'F'
+const GROUP_G = 'G'
+const GROUP_H = 'H'
+
+const A = 0
+const B = 4*1
+const C = 4*2
+const D = 4*3
+const E = 4*4
+const F = 4*5
+const G = 4*6
+const H = 4*7
+
+const LATEST_WORLD_CUP = 2022
+
+const AFC       = "#fafe00"
+const CAF       = "#454545"
+const CONMEBOL  = "#ff0044"
+const CONCACAF  = "#0f4bff"
+const OFC       = "00ddff"
+const UEFA      = "#00ff00"
+
+const HOST          = "H"
+const GROUP_WINNER  = "1"
+const PLAYOFF       = "P"
+const INTER_CONTINENTAL_PLAYOFF = "ICP"
+
+
 const $groupings = $('#groupings')
 const $main = $('#main')
 
 // GLOBAL | Init Data
-const groups = [
+let groups = [
   {
-    name: 'A',
+    name: GROUP_A,
     countries: [
       { name: 'Egypt', flag: 'https://i.imgur.com/OnE6Nlh.gif' },
       { name: 'Russia', flag: 'https://i.imgur.com/8oXSxrY.gif' },
       { name: 'Saudi', flag: 'https://i.imgur.com/p8sxiFR.gif' },
       { name: 'Urugary', flag: 'https://i.imgur.com/Zjamxtq.gif' }
     ],
-  }, {
+  },
+  {
     name: 'B',
     countries: [
       { name: 'Iran', flag: 'https://i.imgur.com/Tt2WbQc.gif' },
@@ -20,7 +54,8 @@ const groups = [
       { name: 'Portugal', flag: 'https://i.imgur.com/hzPGbTJ.gif' },
       { name: 'Spain', flag: 'https://i.imgur.com/0LaBDTf.gif' }
     ]
-  }, {
+  },
+  {
     name: 'C',
     countries: [
       { name: 'Australia', flag: 'https://i.imgur.com/Ty3X9FM.gif' },
@@ -28,7 +63,8 @@ const groups = [
       { name: 'Peru', flag: 'https://i.imgur.com/ALDOycv.gif' },
       { name: 'France', flag: 'https://i.imgur.com/qVjpSum.gif' },
     ]
-  }, {
+  },
+  {
     name: 'D',
     countries: [
       { name: 'Argentina', flag: 'https://i.imgur.com/wOqyuW9.gif' },
@@ -36,7 +72,8 @@ const groups = [
       { name: 'Iceland', flag: 'https://i.imgur.com/khtRIp4.gif' },
       { name: 'Nigeria', flag: 'https://i.imgur.com/Umqr7bz.gif' }
     ]
-  }, {
+  },
+  {
     name: 'E',
     countries: [
       { name: 'Brazil', flag: 'https://i.imgur.com/lnOsyel.gif' },
@@ -44,7 +81,8 @@ const groups = [
       { name: 'Serbia', flag: 'https://i.imgur.com/OsOobI6.gif' },
       { name: 'Switzerland', flag: 'https://i.imgur.com/oAHsrp0.gif' }
     ]
-  }, {
+  },
+  {
     name: 'F',
     countries: [
       { name: 'Germany', flag: 'https://i.imgur.com/tYdPs3u.gif' },
@@ -52,7 +90,8 @@ const groups = [
       { name: 'South Korea', flag: 'https://i.imgur.com/6B6RBlM.gif' },
       { name: 'Sweden', flag: 'https://i.imgur.com/FbDhOhA.gif' }
     ]
-  }, {
+  },
+  {
     name: 'G',
     countries: [
       { name: 'Belgium', flag: 'https://i.imgur.com/z5uctb6.gif' },
@@ -60,7 +99,8 @@ const groups = [
       { name: 'Panama', flag: 'https://i.imgur.com/ABMAejX.gif' },
       { name: 'Tunisia', flag: 'https://i.imgur.com/Q9DOGji.gif' }
     ]
-  }, {
+  },
+  {
     name: 'H',
     countries: [
       { name: 'Colombia', flag: 'https://i.imgur.com/91LLAO1.gif' },
@@ -72,6 +112,7 @@ const groups = [
 ]
 
 // GROUP | Generate New Group
+
 const generateGroup = (groupIndex, group, countries) => {
   return `
     <div id="group${group}" class="group col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-12 mb-3">

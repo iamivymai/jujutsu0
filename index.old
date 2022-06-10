@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2022 World Cup Predictor</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+  <link rel="stylesheet" href="css/styles.css">
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+  </script>
+  <script src="scripts/main.js" defer></script>
+</head>
+
+<body data-aos-easing="ease-out-back" data-aos-duration="500" data-aos-delay="0">
+  <div class="backgrounds overlay">
+    <div class="bg-image background aos-init aos-animate" data-aos="fade-in" data-aos-duration="1500"></div>
+  </div>
+
+  <div id="navbar" class="container-fluid position-fixed p-0 top-0" data-aos="fade-up" data-aos-easing="linear"
+    data-aos-delay="0" data-aos-duration="1000">
+    <nav class="navbar navbar-expand-sm navbar-expand-md navbar-expand-lg navbar-dark bg-primary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/"></a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+          aria-controls="navbarNavDropdown" aria-expanded="true" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="navbar-collapse collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item active">
+              <a class="nav-link" id="home" href="#"><span class="neon">Home</span></a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"><span class="neon">How? <span
+                    class="caret"></span></span></a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="https://www.thetimes.co.uk/article/world-cup-predictor-2018-h5r629fk7">to Play</a></li>
+                <div class="dropdown-divider"></div>
+                <li><a class="dropdown-item" href="#">to Score</a></li>
+                <div class="dropdown-divider"></div>
+                <li><a class="dropdown-item" href="#">to Win</a></li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"><span class="neon">Games<span
+                    class="caret"></span></span></a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">World Cup</a></li>
+                <div class="dropdown-divider"></div>
+                <li><a class="dropdown-item" href="#">Euro</a></li>
+                <div class="dropdown-divider"></div>
+                <li><a class="dropdown-item" href="#">Champions League</a></li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"><span class="neon">About</span></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <div id="heading" class="container-fluid p-0" data-aos="flip-left" data-aos-easing="ease-out-cubic" data-aos-duration="1000" data-asos-delay="3000" data-aos-offset="">
+    <div class="heading-holder">
+      <video playsinline="" muted="" loop="" defaultmuted="" autoplay=""
+        style="width:100%;height:auto;max-height:500px;object-fit:fill;">
+        <source src="https://i.giphy.com/media/mBGWHoP6QAKINAVGcf/giphy.mp4" type="video/mp4">
+      </video>
+      <div class="heading-holder-inner pt-0 text-center d-none d-md-block">
+        <div class=" heading-text pt-0 text-center" data-aos="fade-down-right" data-aos-delay="1000"
+          data-aos-duration="1000">
+          <span aria-hidden="true" class="d-none d-md-inline-block d-lg-inline-block d-xl-inline-block">•</span>
+          <span>QATAR 2022 FINALS START IN</span>
+          <span aria-hidden="true" class="d-none d-md-inline-block d-lg-inline-block d-xl-inline-block">•</span>
+        </div>
+        <div class="clock-wrapper d-none d-md-inline-block d-lg-inline-block d-xl-inline-block" data-aos="fade-up-left"
+          data-aos-delay="2000" data-aos-duration="3000">
+          <div class="clock flip-clock-wrapper" data-matchdatetime="Mon,21 Nov 2022 20:00:00">
+            <span class="flip-clock-divider days">
+              <span class="flip-clock-label">Days</span>
+            </span>
+            <ul class="flip">
+              <li class="flip-clock-before">
+                <a href="#">
+                  <div class="up">
+                    <div class="shadow"></div>
+                    <div class="inn">2</div>
+                  </div>
+                  <div class="down">
+                    <div class="shadow"></div>
+                    <div class="inn">2</div>
+                  </div>
+                </a>
+              </li>
+              <li class="flip-clock-active">
+                <a href="#">
+                  <div class="up">
+                    <div class="shadow"></div>
+                    <div class="inn">3</div>
+                  </div>
+                  <div class="down">
+                    <div class="shadow"></div>
+                    <div class="inn">3</div>
+                  </div>
+                </a>
+              </li>
+            </ul>
+            <ul class="flip ">
+              <li class="flip-clock-before">
+                <a href="#">
+                  <div class="up">
+                    <div class="shadow"></div>
+                    <div class="inn">9</div>
+                  </div>
+                  <div class="down">
+                    <div class="shadow"></div>
+                    <div class="inn">9</div>
+                  </div>
+                </a>
+              </li>
+              <li class="flip-clock-active">
+                <a href="#">
+                  <div class="up">
+                    <div class="shadow"></div>
+                    <div class="inn">0</div>
+                  </div>
+                  <div class="down">
+                    <div class="shadow"></div>
+                    <div class="inn">0</div>
+                  </div>
+                </a>
+              </li>
+            </ul>
+            <ul class="flip ">
+              <li class="flip-clock-before">
+                <a href="#">
+                  <div class="up">
+                    <div class="shadow"></div>
+                    <div class="inn">9</div>
+                  </div>
+                  <div class="down">
+                    <div class="shadow"></div>
+                    <div class="inn">9</div>
+                  </div>
+                </a>
+              </li>
+              <li class="flip-clock-active">
+                <a href="#">
+                  <div class="up">
+                    <div class="shadow"></div>
+                    <div class="inn">0</div>
+                  </div>
+                  <div class="down">
+                    <div class="shadow"></div>
+                    <div class="inn">0</div>
+                  </div>
+                </a>
+              </li>
+            </ul>
+            <span class="flip-clock-divider hours">
+              <span class="flip-clock-label">Hours</span>
+              <span class="flip-clock-dot top"></span>
+              <span class="flip-clock-dot bottom"></span>
+            </span>
+            <ul class="flip ">
+              <li class="flip-clock-before">
+                <a href="#">
+                  <div class="up">
+                    <div class="shadow"></div>
+                    <div class="inn">9</div>
+                  </div>
+                  <div class="down">
+                    <div class="shadow"></div>
+                    <div class="inn">9</div>
+                  </div>
+                </a>
+              </li>
+              <li class="flip-clock-active">
+                <a href="#">
+                  <div class="up">
+                    <div class="shadow"></div>
+                    <div class="inn">0</div>
+                  </div>
+                  <div class="down">
+                    <div class="shadow"></div>
+                    <div class="inn">0</div>
+                  </div>
+                </a>
+              </li>
+            </ul>
+            <ul class="flip  play">
+              <li class="flip-clock-before">
+                <a href="#">
+                  <div class="up">
+                    <div class="shadow"></div>
+                    <div class="inn">7</div>
+                  </div>
+                  <div class="down">
+                    <div class="shadow"></div>
+                    <div class="inn">7</div>
+                  </div>
+                </a>
+              </li>
+              <li class="flip-clock-active">
+                <a href="#">
+                  <div class="up">
+                    <div class="shadow"></div>
+                    <div class="inn">6</div>
+                  </div>
+                  <div class="down">
+                    <div class="shadow"></div>
+                    <div class="inn">6</div>
+                  </div>
+                </a>
+              </li>
+            </ul>
+            <span class="flip-clock-divider minutes">
+              <span class="flip-clock-label">Minutes</span>
+              <span class="flip-clock-dot top"></span>
+              <span class="flip-clock-dot bottom"></span>
+            </span>
+            <ul class="flip  play">
+              <li class="flip-clock-before">
+                <a href="#">
+                  <div class="up">
+                    <div class="shadow"></div>
+                    <div class="inn">3</div>
+                  </div>
+                  <div class="down">
+                    <div class="shadow"></div>
+                    <div class="inn">3</div>
+                  </div>
+                </a>
+              </li>
+              <li class="flip-clock-active">
+                <a href="#">
+                  <div class="up">
+                    <div class="shadow"></div>
+                    <div class="inn">2</div>
+                  </div>
+                  <div class="down">
+                    <div class="shadow"></div>
+                    <div class="inn">2</div>
+                  </div>
+                </a>
+              </li>
+            </ul>
+            <ul class="flip  play">
+              <li class="flip-clock-before">
+                <a href="#">
+                  <div class="up">
+                    <div class="shadow"></div>
+                    <div class="inn">7</div>
+                  </div>
+                  <div class="down">
+                    <div class="shadow"></div>
+                    <div class="inn">7</div>
+                  </div>
+                </a>
+              </li>
+              <li class="flip-clock-active">
+                <a href="#">
+                  <div class="up">
+                    <div class="shadow"></div>
+                    <div class="inn">6</div>
+                  </div>
+                  <div class="down">
+                    <div class="shadow"></div>
+                    <div class="inn">6</div>
+                  </div>
+                </a>
+              </li>
+            </ul>
+            <span class="flip-clock-divider seconds">
+              <span class="flip-clock-label">Seconds</span>
+              <span class="flip-clock-dot top"></span>
+              <span class="flip-clock-dot bottom"></span>
+            </span>
+            <ul class="flip  play">
+              <li class="flip-clock-before">
+                <a href="#">
+                  <div class="up">
+                    <div class="shadow"></div>
+                    <div class="inn">5</div>
+                  </div>
+                  <div class="down">
+                    <div class="shadow"></div>
+                    <div class="inn">5</div>
+                  </div>
+                </a>
+              </li>
+              <li class="flip-clock-active">
+                <a href="#">
+                  <div class="up">
+                    <div class="shadow"></div>
+                    <div class="inn">4</div>
+                  </div>
+                  <div class="down">
+                    <div class="shadow"></div>
+                    <div class="inn">4</div>
+                  </div>
+                </a>
+              </li>
+            </ul>
+            <ul class="flip  play">
+              <li class="flip-clock-before">
+                <a href="#">
+                  <div class="up">
+                    <div class="shadow"></div>
+                    <div class="inn">3</div>
+                  </div>
+                  <div class="down">
+                    <div class="shadow"></div>
+                    <div class="inn">3</div>
+                  </div>
+                </a>
+              </li>
+              <li class="flip-clock-active">
+                <a href="#">
+                  <div class="up">
+                    <div class="shadow"></div>
+                    <div class="inn">2</div>
+                  </div>
+                  <div class="down">
+                    <div class="shadow"></div>
+                    <div class="inn">2</div>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main id="main" class="container my-5 text-white">
+    <div id="groupings" class="row">
+    </div>
+  </main>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
+</body>
+
+</html>
