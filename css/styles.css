@@ -81,7 +81,16 @@
   border-color: rgba(0, 0, 0, 0.4) !important;
 }
 
+#main .group-standing {
+  height: 68px;
+}
+
 #main .group-team.selected .round-flag {
   border-width: 3px !important;
   border-color: rgba(0, 0, 0, 0.4) !important;
+}
+
+#brackets [data-bracket-id="third"] .bracket-matches .match {
+  position: relative;
+  top: 100px;
 }
