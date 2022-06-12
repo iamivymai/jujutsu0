@@ -2,6 +2,20 @@ export const generateBracketMatchHTML = (match, matchIndex) => {
   const teamA = _.get(match, '[0]', null)
   const teamB = _.get(match, '[1]', null)
 
+  // const confederationSwitch = (confederation) => ({
+  //     'AFC': YELLOW_COLOR,
+  //     'CAF': BLACK_COLOR,
+  //     'CONMEBOL': RED_COLOR,
+  //     'CONCACAF': BLUE_COLOR,
+  //     'OFC': CYAN_COLOR,
+  //     'UEFA': GREEN_COLOR
+  //     })[confederation]
+
+  // if(teamA){
+  //   var rankingStyleHTML = ""
+  //   bracketStyleHTML += `background-color: ${confederationSwitch(teamA.qualification.from)}  !important`
+  // }
+
   return `
     <div class="match py-3" data-match-index="${matchIndex}">
       <div
@@ -9,7 +23,10 @@ export const generateBracketMatchHTML = (match, matchIndex) => {
         data-team-index="0"
         data-team-id="${teamA ? teamA.id : ''}"
       >
-        ${teamA ? teamA.name : '<span class="opacity-0">Temp</span>'}
+        <button class="btn btn-dark glow-on-hover" type="button">
+          ${teamA ? teamA.name : '<span class="opacity-0">Temp</span>'}
+        </button>
+
       </div>
 
       <div
@@ -17,11 +34,14 @@ export const generateBracketMatchHTML = (match, matchIndex) => {
         data-team-index="1"
         data-team-id="${teamB ? teamB.id : ''}"
       >
-        ${teamB ? teamB.name : '<span class="opacity-0">Temp</span>'}
+      <button class="btn btn-dark glow-on-hover" type="button">${teamB ? teamB.name : '<span class="opacity-0">Temp</span>'}</button>
       </div>
     </div>
   `
 }
+
+    // <img class="group-ranking-flag border border-white me-2" src="${teamA.flag}" alt="">
+    // <span class="flex-grow-1">${teamA.id}</span>
 
 export const generateBracketMatchesHTML = (matches) => {
   let template = ''
@@ -38,7 +58,7 @@ export const generateBracketHTML = (bracketID, bracketData) => {
 
   return `
     <div class="bracket col" data-bracket-id="${bracketID}">
-      <h3>${bracketData.title}</h3>
+        <p class="h3 text-center">${bracketData.title}</p>
 
       <div class="bracket-matches h-100 d-flex flex-column justify-content-around">
         ${generateBracketMatchesHTML(matches)}

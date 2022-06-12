@@ -99,6 +99,10 @@
   border-color: rgba(0, 0, 0, 0.4) !important;
 }
 
+#brackets {
+  margin-top: 100px;
+}
+
 #brackets [data-bracket-id="third"] .bracket-matches .match {
   position: relative;
   top: 100px;
@@ -106,10 +110,10 @@
 
 
 
-/* 
+
 #main .glow-on-hover {
-    width: 220px;
-    height: 50px;
+    width: 240px;
+    height: 60px;
     border: none;
     outline: none;
     color: #fff;
@@ -165,4 +169,4 @@
     0% { background-position: 0 0; }
     50% { background-position: 400% 0; }
     100% { background-position: 0 0; }
-} */
+}
