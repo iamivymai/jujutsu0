@@ -1,16 +1,33 @@
 // GROUP | Generate New Group
-export const generate32CardStandingHTML = (teamData) => {
+export const generate32CardStandingHTML = (groupRanking,teamData) => {
+  console.log(teamData)
+  console.log(groupRanking)
+  console.dir(groupRanking)
+
+  const rankingSwitch = (ranking) => ({
+    1: RANKING_1,
+    2: RANKING_2,
+    3: RANKING_3,
+    4: RANKING_4
+  })[ranking]
+
   return `
-    <img class="round-flag rounded-circle border border-white me-2" src="${teamData.flag}" alt="">
-    <span class="flex-grow-1">${teamData.name}</span>
+    ${rankingSwitch(groupRanking)}
+    <img class="group-ranking-flag border border-white me-2" src="${teamData.flag}" alt="">
+    <span class="flex-grow-1">${teamData.id}</span>
   `
+  // return `
+  //   ${rankingSwitch(groupRanking)}
+  //   <img class="round-flag rounded-circle border border-white me-2" src="${teamData.flag}" alt="">
+  //   <span class="flex-grow-1">${teamData.id}</span>
+  // `
 }
 
 export const generate32CardTeamHTML = (teamData) => {
   return `
     <div class="group-team col text-center" data-team-id="${teamData.id}">
       <img class="round-flag rounded-circle border border-white mx-auto" src="${teamData.flag}" alt="">
-      <div>${teamData.name}</div>
+      <div>${teamData.id}</div>
     </div>
   `
 }
@@ -39,7 +56,7 @@ export const generate32CardHTML = (groupID, groupData) => {
               class="group-standing list-group-item list-group-item-action bg-transparent text-white border-white d-flex flex-row align-items-center"
               data-group-standing-id="0"
             >
-              <span class="me-2">1st</span>
+              <span class="me-2">${RANKING_1}</span>
             </button>
 
             <button
@@ -47,7 +64,7 @@ export const generate32CardHTML = (groupID, groupData) => {
               class="group-standing list-group-item list-group-item-action bg-transparent text-white border-white d-flex flex-row align-items-center"
               data-group-standing-id="1"
             >
-              <span class="me-2">2nd</span>
+              <span class="me-2">${RANKING_2}</span>
             </button>
 
             <button
@@ -55,7 +72,7 @@ export const generate32CardHTML = (groupID, groupData) => {
               class="group-standing list-group-item list-group-item-action bg-transparent text-white border-white d-flex flex-row align-items-center"
               data-group-standing-id="2"
             >
-              <span class="me-2">3rd</span>
+              <span class="me-2">${RANKING_3}</span>
             </button>
 
             <button
@@ -63,7 +80,7 @@ export const generate32CardHTML = (groupID, groupData) => {
               class="group-standing list-group-item list-group-item-action bg-transparent text-white border-white d-flex flex-row align-items-center"
               data-group-standing-id="3"
             >
-              <span class="me-2">4th</span>
+              <span class="me-2">${RANKING_4}</span>
             </button>
           </ul>
 
