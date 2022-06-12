@@ -481,7 +481,7 @@ const bind32 = () => {
       console.log($elem)
       console.log(teamData.qualification.from)
 
-
+/
       var rankingStyleHTML = ""
 
       if (teamData.qualification.from === 'AFC') {
