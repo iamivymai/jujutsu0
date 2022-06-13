@@ -23,7 +23,8 @@ export const generateBracketMatchHTML = (match, matchIndex) => {
         data-team-index="0"
         data-team-id="${teamA ? teamA.id : ''}"
       >
-        <button class="btn btn-dark glow-on-hover" type="button">
+        <button class="px-1 py-1 btn btn-dark glow-on-hover" type="button">
+          ${teamA ? `<img class="group-ranking-flag" src="${teamA.flag}" alt="">` : ''}
           ${teamA ? teamA.name : '<span class="opacity-0">Temp</span>'}
         </button>
 
@@ -34,7 +35,10 @@ export const generateBracketMatchHTML = (match, matchIndex) => {
         data-team-index="1"
         data-team-id="${teamB ? teamB.id : ''}"
       >
-      <button class="btn btn-dark glow-on-hover" type="button">${teamB ? teamB.name : '<span class="opacity-0">Temp</span>'}</button>
+        <button class="px-1 py-1 btn btn-dark glow-on-hover" type="button">
+          ${teamB ? `<img class="group-ranking-flag" src="${teamB.flag}" alt="">` : ''}
+          ${teamB ? teamB.name : '<span class="opacity-0">Temp</span>'}
+        </button>
       </div>
     </div>
   `

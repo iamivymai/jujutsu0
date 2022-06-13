@@ -19,3 +19,35 @@ else if (toStage === 4) {
     _.set(stages, `champion.matches[${finalToMatchIndex}][${finalToTeamIndex}]`)
   }
 } else
+
+// how to console inside a dynamic generated html function with return
+  const a = `
+    <div class="match py-3" data-match-index="${matchIndex}">
+      <div
+        class="team border-bottom"
+        data-team-index="0"
+        data-team-id="${teamA ? teamA.id : ''}"
+      >
+        <button class="btn btn-dark glow-on-hover" type="button">
+          ${teamA ? `<img src="${teamA.flag}" alt="">` : ''}
+          ${teamA ? teamA.name : '<span class="opacity-0">Temp</span>'}
+        </button>
+
+      </div>
+
+      <div
+        class="team border-bottom"
+        data-team-index="1"
+        data-team-id="${teamB ? teamB.id : ''}"
+      >
+      <button class="btn btn-dark glow-on-hover" type="button">
+        ${teamB ? `<img src="${teamB.flag}" alt="">` : ''}
+        ${teamB ? teamB.name : '<span class="opacity-0">Temp</span>'}
+      </button>
+      </div>
+    </div>
+  `
+
+  console.log(a)
+  return a
+}
