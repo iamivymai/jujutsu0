@@ -1,15 +1,20 @@
+export const confederationColors = {
+  'AFC': YELLOW_COLOR,
+  'CAF': BLACK_COLOR,
+  'CONMEBOL': RED_COLOR,
+  'CONCACAF': BLUE_COLOR,
+  'OFC': CYAN_COLOR,
+  'UEFA': GREEN_COLOR
+}
+
 export const generateBracketMatchHTML = (match, matchIndex) => {
   const teamA = _.get(match, '[0]', null)
   const teamB = _.get(match, '[1]', null)
+  const teamAC = _.get(teamA, 'qualification.from', '')
+  const teamBC = _.get(teamB, 'qualification.from', '')
 
-  // const confederationSwitch = (confederation) => ({
-  //     'AFC': YELLOW_COLOR,
-  //     'CAF': BLACK_COLOR,
-  //     'CONMEBOL': RED_COLOR,
-  //     'CONCACAF': BLUE_COLOR,
-  //     'OFC': CYAN_COLOR,
-  //     'UEFA': GREEN_COLOR
-  //     })[confederation]
+  const teamAColor = confederationColors[teamAC]
+  const teamBColor = confederationColors[teamBC]
 
   // if(teamA){
   //   var rankingStyleHTML = ""
@@ -23,9 +28,13 @@ export const generateBracketMatchHTML = (match, matchIndex) => {
         data-team-index="0"
         data-team-id="${teamA ? teamA.id : ''}"
       >
-        <button class="px-1 py-1 btn btn-dark glow-on-hover" type="button">
-          ${teamA ? `<img class="group-ranking-flag" src="${teamA.flag}" alt="">` : ''}
-          ${teamA ? teamA.name : '<span class="opacity-0">Temp</span>'}
+        <button
+          class="d-flex justify-content-start px-1 py-1 btn btn-dark glow-on-hover"
+          type="button"
+          style="background-color: ${teamAColor}"
+        >
+          ${teamA ? `<img class=" bracket-flag" src="${teamA.flag}" alt="">` : ''}
+          ${teamA ? `<span class="h4 px-2 my-0 align-self-center">${teamA.name}</span>` : '<span class="opacity-0">Temp</span>'}
         </button>
 
       </div>
@@ -35,9 +44,13 @@ export const generateBracketMatchHTML = (match, matchIndex) => {
         data-team-index="1"
         data-team-id="${teamB ? teamB.id : ''}"
       >
-        <button class="px-1 py-1 btn btn-dark glow-on-hover" type="button">
-          ${teamB ? `<img class="group-ranking-flag" src="${teamB.flag}" alt="">` : ''}
-          ${teamB ? teamB.name : '<span class="opacity-0">Temp</span>'}
+        <button
+          class="d-flex justify-content-start px-1 py-1 btn btn-dark glow-on-hover"
+          type="button"
+          style="background-color: ${teamBColor}"
+        >
+          ${teamB ? `<img class=" bracket-flag" src="${teamB.flag}" alt="">` : ''}
+          ${teamB ? `<span class="h4 px-2 my-0 align-self-center">${teamB.name}</span>` : '<span class="opacity-0">Temp</span>'}
         </button>
       </div>
     </div>

@@ -16,11 +16,6 @@ export const generate32CardStandingHTML = (groupRanking,teamData) => {
     <img class="group-ranking-flag border border-white me-2" src="${teamData.flag}" alt="">
     <span class="flex-grow-1">${teamData.id}</span>
   `
-  // return `
-  //   ${rankingSwitch(groupRanking)}
-  //   <img class="round-flag rounded-circle border border-white me-2" src="${teamData.flag}" alt="">
-  //   <span class="flex-grow-1">${teamData.id}</span>
-  // `
 }
 
 export const generate32CardTeamHTML = (teamData) => {

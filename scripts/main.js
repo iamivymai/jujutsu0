@@ -461,6 +461,8 @@ const bind32 = () => {
     const teamID = $selected.data('team-id')
     const groupStandingIndex = $elem.data('group-standing-id')
 
+    var rankingStyleHTML = ""
+
     const confederationSwitch = (confederation) => ({
       'AFC': YELLOW_COLOR,
       'CAF': BLACK_COLOR,
@@ -480,21 +482,17 @@ const bind32 = () => {
 
       console.log($elem)
       console.log(teamData.qualification.from)
+      console.log(confederationSwitch(teamData.qualification.from))
 
-
-      var rankingStyleHTML = ""
-
-      if (teamData.qualification.from === 'AFC') {
-        rankingStyleHTML = `color: black !important ;`
-      }
-
-      console.log('before:', rankingStyleHTML)
-
-      rankingStyleHTML += `background-color: ${confederationSwitch(teamData.qualification.from)}  !important`
-
-      console.log('after:', rankingStyleHTML)
+      rankingStyleHTML += `background-color: ${confederationSwitch(teamData.qualification.from)} !important `
 
       $elem.attr('style', rankingStyleHTML)
+
+      if (teamData.qualification.from === 'AFC') {
+        rankingStyleHTML += `; color: black !important`
+        $elem.attr('style', rankingStyleHTML)
+      }
+
       $selected.removeClass('selected').addClass('disabled')
       // $selected.addClass('glow-on-hover')
       console.dir($selected)
